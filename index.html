@@ -3,349 +3,334 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>HALF CLUTCH MINI - WITH SOUND</title>
+<title>HALF CLUTCH LITE</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,Arial,sans-serif;-webkit-tap-highlight-color:transparent;user-select:none}
-body{background:#0a0a0a;color:#fff;overflow:hidden;height:100vh;height:100dvh}
-#gameWrap{position:relative;width:100%;height:100dvh;max-width:480px;margin:0 auto;background:#1a2b1a;overflow:hidden}
-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;background:#2d4a2d;pointer-events:none}
-.hud{position:absolute;top:0;left:0;right:0;z-index:5;padding:10px;display:flex;justify-content:space-between;gap:8px;pointer-events:none}
-.hud-box{background:rgba(0,0,0,.65);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.25);border-radius:14px;padding:7px 10px;text-align:center;min-width:62px}
-.hud-box b{font-size:16px;display:block;line-height:1}
-.hud-box span{font-size:9px;color:rgba(255,255,255,.7);letter-spacing:.5px}
-.wanted{color:#ffcc00}
-.speedo{position:absolute;left:10px;bottom:182px;z-index:5;background:rgba(0,0,0,.7);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.25);border-radius:18px;padding:10px 12px;width:132px;pointer-events:none}
-.speedo h3{font-size:10px;color:rgba(255,255,255,.7)}
-.speedo .speed{font-size:32px;font-weight:900;line-height:1}
-.speedo .speed small{font-size:12px}
-.rpm-bar{height:10px;background:#222;border-radius:99px;overflow:hidden;margin-top:6px;border:1px solid rgba(255,255,255,.2)}
-.rpm-fill{height:100%;width:0%;background:linear-gradient(90deg,#00e676,#ffeb3b,#ff1744);transition:width .08s linear}
-.rpm-label{font-size:10px;margin-top:4px;color:rgba(255,255,255,.8)}
-.gear-box{position:absolute;right:10px;bottom:182px;z-index:5;background:rgba(0,0,0,.7);border:1px solid rgba(255,255,255,.25);border-radius:18px;padding:10px 12px;text-align:center;width:86px;pointer-events:none}
-.gear-box .gigi{font-size:36px;font-weight:900;line-height:1}
-.gear-box span{font-size:9px;color:rgba(255,255,255,.7)}
-.clutch-box{position:absolute;left:50%;transform:translateX(-50%);bottom:182px;z-index:5;background:rgba(0,0,0,.75);border:1px solid rgba(255,255,255,.25);border-radius:18px;padding:10px 12px;width:150px;text-align:center;pointer-events:none}
-.clutch-box b{font-size:11px}
-.clutch-meter{position:relative;height:14px;background:#333;border-radius:99px;margin-top:6px;overflow:hidden;border:1px solid rgba(255,255,255,.2)}
-.clutch-green{position:absolute;left:42%;width:24%;height:100%;background:rgba(0,230,118,.6);border-left:2px solid #00e676;border-right:2px solid #00e676}
-.clutch-fill{position:absolute;left:0;top:0;height:100%;background:#fff;width:100%;transition:width .05s linear}
-.clutch-label{font-size:9px;margin-top:4px}
-.clutch-label.ok{color:#00e676;font-weight:800}
-.clutch-label.bad{color:#ff5252;font-weight:800}
-.fuel{position:absolute;left:10px;top:68px;z-index:5;background:rgba(0,0,0,.6);border-radius:12px;padding:6px 10px;font-size:11px;border:1px solid rgba(255,255,255,.2);pointer-events:none}
-.fuel-bar{width:90px;height:7px;background:#333;border-radius:99px;overflow:hidden;margin-top:4px}
-.fuel-fill{height:100%;background:#ff9800;width:100%;transition:width .3s}
-.sound-btn{position:absolute;right:10px;top:110px;z-index:8;width:44px;height:44px;border-radius:50%;border:2px solid rgba(255,255,255,.5);background:rgba(0,0,0,.65);color:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.sound-btn.mute{background:rgba(255,23,68,.6)}
-.controls{position:absolute;bottom:0;left:0;right:0;z-index:6;padding:10px;padding-bottom:calc(10px + env(safe-area-inset-bottom));display:flex;justify-content:space-between;align-items:flex-end;gap:8px;background:linear-gradient(to top, rgba(0,0,0,.55), transparent);pointer-events:none}
-.controls.aktif{pointer-events:auto}
-.col{display:flex;flex-direction:column;gap:8px;align-items:center}
-.row{display:flex;gap:8px}
-.btn{width:66px;height:66px;border-radius:50%;border:2px solid rgba(255,255,255,.5);background:rgba(255,255,255,.15);backdrop-filter:blur(10px);color:#fff;font-size:22px;display:flex;align-items:center;justify-content:center;flex-direction:column;cursor:pointer;touch-action:none;pointer-events:auto}
-.btn:active{transform:scale(.92);background:rgba(255,255,255,.35)}
-.btn small{font-size:8px;font-weight:800;letter-spacing:.5px}
-.btn.gas{background:rgba(0,200,83,.35);border-color:#00e676;width:78px;height:78px}
-.btn.gas.aktif{background:#00e676;color:#000}
-.btn.rem{background:rgba(255,23,68,.35);border-color:#ff1744}
-.btn.kopling{background:rgba(255,152,0,.35);border-color:#ff9800;width:78px;height:78px}
-.btn.kopling.aktif{background:#ff9800;color:#000}
-.btn.gigi{background:rgba(255,255,255,.2);width:56px;height:56px;font-size:16px}
-.btn.start{background:#fff;color:#000;width:88px;height:44px;border-radius:99px;font-size:13px;font-weight:900}
-.btn.klakson{background:rgba(255,235,59,.3);border-color:#ffeb3b;width:52px;height:52px;font-size:18px}
-.center-col{align-items:center}
-/* OVERLAY - FIX PENCET */
-.overlay{position:absolute;inset:0;z-index:100 !important;background:rgba(0,0,0,.78);backdrop-filter:blur(8px);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;pointer-events:auto !important;touch-action:manipulation;overflow-y:auto}
-.overlay h1{font-size:38px;font-weight:900;letter-spacing:-1px;line-height:1}
-.overlay h1 span{color:#ff9800}
-.overlay p{font-size:13px;color:rgba(255,255,255,.75);line-height:1.6;margin:12px 0}
-.overlay .cara{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);border-radius:18px;padding:14px;text-align:left;font-size:12px;line-height:1.7;width:100%;max-width:340px;pointer-events:none}
-.big-btn{width:100%;max-width:340px;padding:16px;border:none;border-radius:16px;background:#fff;color:#111;font-weight:900;font-size:17px;margin-top:14px;cursor:pointer;pointer-events:auto !important;touch-action:manipulation;position:relative;z-index:101}
-.big-btn.orange{background:#ff9800;color:#000}
-.big-btn:active{transform:scale(.97)}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;-webkit-tap-highlight-color:transparent}
+body{background:#111;color:#fff;overflow:hidden}
+#wrap{position:relative;width:100%;height:100dvh;max-width:480px;margin:0 auto;background:#2d4a2d;overflow:hidden}
+canvas{position:absolute;inset:0;width:100%;height:100%}
+.hud{position:absolute;top:8px;left:8px;right:8px;display:flex;gap:6px;z-index:5}
+.hud div{flex:1;background:rgba(0,0,0,.7);border-radius:10px;padding:6px;text-align:center;font-size:13px;font-weight:800}
+.hud small{display:block;font-size:9px;color:#aaa;font-weight:400}
+.info{position:absolute;left:8px;top:52px;z-index:5;background:rgba(0,0,0,.7);border-radius:10px;padding:8px 10px;font-size:12px;line-height:1.5}
+.info b{font-size:18px}
+.bar{height:8px;background:#333;border-radius:99px;overflow:hidden;margin-top:4px}
+#rpmBar{height:100%;width:10%;background:#0f0}
+#clutchBar{height:100%;width:100%;background:#fff}
+.kontrol{position:absolute;bottom:0;left:0;right:0;z-index:6;display:flex;justify-content:space-between;padding:10px;background:rgba(0,0,0,.4)}
+.tombol{width:68px;height:68px;border-radius:50%;border:2px solid #fff;background:rgba(255,255,255,.2);color:#fff;font-size:22px;display:flex;align-items:center;justify-content:center;flex-direction:column;touch-action:none}
+.tombol small{font-size:9px}
+.tombol.gas{background:#00a651;width:80px;height:80px}
+.tombol.kopling{background:#ff9800;width:80px;height:80px}
+.tombol:active{background:#fff;color:#000}
+.tombol.gigi{width:52px;height:52px;font-size:18px}
+#menu{position:absolute;inset:0;z-index:999;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center}
+#menu h1{font-size:42px;line-height:1}
+#menu h1 span{color:#ff9800}
+#menu p{margin:12px 0;font-size:13px;color:#ccc;line-height:1.6}
+#btnMulai{width:100%;max-width:320px;padding:18px;background:#ff9800;border:none;border-radius:16px;font-size:20px;font-weight:900;color:#000;margin-top:10px;cursor:pointer}
+#btnMulai:active{transform:scale(.96)}
+#btnMulai2{width:100%;max-width:320px;padding:14px;background:#fff;border:none;border-radius:16px;font-size:15px;font-weight:800;margin-top:10px}
+#pesan{position:absolute;top:40%;left:50%;transform:translate(-50%,-50%);z-index:20;background:#ff1744;padding:12px 18px;border-radius:12px;font-weight:900;display:none}
+#perfect{position:absolute;top:30%;left:50%;transform:translate(-50%,-50%);z-index:20;background:#00e676;color:#000;padding:10px 16px;border-radius:99px;font-weight:900;display:none}
 .hilang{display:none !important}
-.stall{position:absolute;top:42%;left:50%;transform:translate(-50%,-50%);z-index:15;background:#ff1744;color:#fff;padding:12px 18px;border-radius:14px;font-weight:900;font-size:18px;box-shadow:0 10px 30px rgba(0,0,0,.5);animation:kedip .5s infinite alternate}
-@keyframes kedip{from{transform:translate(-50%,-50%) scale(1)}to{transform:translate(-50%,-50%) scale(1.05)}}
-.perfect{position:absolute;top:32%;left:50%;transform:translate(-50%,-50%);z-index:15;background:#00e676;color:#000;padding:10px 16px;border-radius:99px;font-weight:900;font-size:14px;pointer-events:none}
 </style>
 </head>
 <body>
-<div id="gameWrap">
+<div id="wrap">
 <canvas id="cv"></canvas>
+
 <div class="hud">
-  <div class="hud-box"><b id="hudSkor">0</b><span>SKOR</span></div>
-  <div class="hud-box"><b id="hudKoin">🪙 0</b><span>KOINS</span></div>
-  <div class="hud-box"><b id="hudJarak">0m</b><span>JARAK</span></div>
-  <div class="hud-box"><b class="wanted" id="hudWanted">★☆☆☆☆</b><span>POLISI</span></div>
+  <div><span id="skor">0</span><small>SKOR</small></div>
+  <div><span id="koin">0</span><small>KOINS</small></div>
+  <div><span id="jarak">0m</span><small>JARAK</small></div>
+  <div><span id="wanted">☆☆☆☆☆</span><small>POLISI</small></div>
 </div>
-<div class="fuel">⛽ BENSIN<div class="fuel-bar"><div class="fuel-fill" id="fuelFill"></div></div><span id="fuelText">100%</span></div>
-<button type="button" class="sound-btn" id="btnSuara">🔊</button>
-<div class="speedo">
-  <h3>SPEEDOMETER</h3>
-  <div class="speed"><span id="speedVal">0</span> <small>km/h</small></div>
-  <div class="rpm-bar"><div class="rpm-fill" id="rpmFill"></div></div>
-  <div class="rpm-label">RPM <b id="rpmVal">0</b> / 8000 • <span id="rpmStatus">IDLE</span></div>
+
+<div class="info">
+  <b><span id="speed">0</span> km/h</b> • GIGI <b id="gigi">N</b><br>
+  RPM <span id="rpm">800</span>
+  <div class="bar"><div id="rpmBar"></div></div>
+  KOPLING <span id="clutchTxt">LEPAS</span>
+  <div class="bar"><div id="clutchBar"></div></div>
+  BENSIN <span id="bensin">100%</span>
+  <div class="bar"><div id="bensinBar" style="width:100%;background:#ff9800;height:100%"></div></div>
 </div>
-<div class="gear-box">
-  <div class="gigi" id="gearVal">N</div>
-  <span>GIGI • <b id="gearStatus">NETRAL</b></span>
-</div>
-<div class="clutch-box">
-  <b>HALF CLUTCH</b>
-  <div class="clutch-meter"><div class="clutch-green"></div><div class="clutch-fill" id="clutchFill"></div></div>
-  <div class="clutch-label" id="clutchLabel">TAHAN KOPLING + GAS</div>
-</div>
-<div id="stallBox" class="stall hilang">🚨 MOGOK! START ULANG</div>
-<div id="perfectBox" class="perfect hilang">🔥 PERFECT START! +500</div>
-<div class="controls" id="controls">
-  <div class="col">
-    <div class="row">
-      <div class="btn" id="btnKiri">◀<small>BELOK</small></div>
-      <div class="btn" id="btnKanan">▶<small>BELOK</small></div>
+
+<div id="pesan">MOGOK!</div>
+<div id="perfect">🔥 PERFECT START +500</div>
+
+<div class="kontrol">
+  <div style="display:flex;flex-direction:column;gap:8px">
+    <div style="display:flex;gap:8px">
+      <div class="tombol" id="kiri">◀<small>BELOK</small></div>
+      <div class="tombol" id="kanan">▶<small>BELOK</small></div>
     </div>
-    <div class="row">
-      <div class="btn gigi" id="btnGigiTurun">−<small>GIGI</small></div>
-      <div class="btn gigi" id="btnGigiNaik">+<small>GIGI</small></div>
+    <div style="display:flex;gap:8px">
+      <div class="tombol gigi" id="gigiMin">−</div>
+      <div class="tombol gigi" id="gigiPlus">+</div>
+      <div class="tombol gigi" id="klakson">📯</div>
     </div>
   </div>
-  <div class="col center-col">
-    <button type="button" class="btn start hilang" id="btnStart">▶ START</button>
-    <div class="btn klakson" id="btnKlakson">📯<small>KLAKSON</small></div>
-    <div style="font-size:10px;color:rgba(255,255,255,.7);text-align:center">TAHAN KOPLING<br>SEBELUM START</div>
+  <div style="display:flex;flex-direction:column;gap:8px;align-items:center">
+    <div class="tombol" id="btnStart" style="width:80px;height:40px;border-radius:99px;font-size:12px;display:none">▶ START</div>
+    <div class="tombol kopling" id="kopling">🦶<small>KOPLING</small></div>
   </div>
-  <div class="col">
-    <div class="row">
-      <div class="btn rem" id="btnRem">🛑<small>REM</small></div>
-      <div class="btn gas" id="btnGas">⛽<small>GAS</small></div>
-    </div>
-    <div class="row">
-      <div class="btn kopling" id="btnKopling">🦶<small>KOPLING</small></div>
-    </div>
+  <div style="display:flex;flex-direction:column;gap:8px">
+    <div class="tombol" id="rem" style="background:#ff1744">🛑<small>REM</small></div>
+    <div class="tombol gas" id="gas">⛽<small>GAS</small></div>
   </div>
 </div>
-<div class="overlay" id="menuAwal">
-  <h1>HALF<br><span>CLUTCH</span> MINI</h1>
-  <p>Game nyetir manual mirip Half Clutch.<br><b>🔊 SAIKI ONO SUARANE!</b> Mesin nggereng ngikut RPM.</p>
-  <div class="cara">
-    <b>🎮 CARA MAIN:</b><br>
-    1. Tahan <b>KOPLING 🦶</b><br>
-    2. Tahan <b>GAS ⛽</b> sampe RPM neng zona ijo<br>
-    3. Lepas <b>KOPLING alon-alon</b> - ojo langsung cul!<br>
-    4. Nek RPM pas = <b>PERFECT START 🔥</b><br>
-    5. Ganti gigi <b>+ / −</b>, kopling tiap ganti gigi<br>
-    6. Hindari mobil, jupuk 🪙 & ⛽<br>
-    7. Nabrak = Polisi ngejar! ★ naik<br><br>
-    <b>🔊 SUARA:</b> Mesin, klakson, tabrakan, koin, sirine polisi, mogok.
-  </div>
-  <button type="button" class="big-btn orange" id="btnMulai">▶️ MULAI NYETIR 🔊</button>
-  <button type="button" class="big-btn" id="btnItch">🌐 Mainkan Half Clutch Asli di itch.io</button>
-  <p style="font-size:11px;margin-top:8px">Nek tombol nduwur ora iso dipencet, pencet layar ngendi wae, langsung mulai.</p>
+
+<!-- MENU -->
+<div id="menu">
+  <h1>HALF<br><span>CLUTCH</span><br>LITE</h1>
+  <p>Versi simpel, mesti iso mlebu.<br><br>
+  <b>CARA MAIN:</b><br>
+    1. Tahan KOPLING 🦶<br>
+    2. Tahan GAS ⛽ sampe RPM 4000<br>
+    3. Pencet + GIGI gawe gigi 1<br>
+    4. Lepas KOPLING alon-alon<br>
+    5. Ganti gigi nganggo + / −<br>
+  Hindari mobil liyo, jupuk koin & bensin.</p>
+  <button id="btnMulai" type="button">▶️ MULAI NYETIR</button>
+  <button id="btnMulai2" type="button">🔊 MULAI + SUARA</button>
+  <p id="debug" style="font-size:11px;color:#888;margin-top:10px">Status: Nunggu dipencet...</p>
 </div>
-<div class="overlay hilang" id="menuGameOver">
-  <h1>GAME<br><span>OVER</span></h1>
-  <p id="gameOverText">Mobilmu rusak parah!</p>
-  <div class="cara" style="text-align:center">
-    <div style="font-size:32px;font-weight:900" id="finalSkor">0</div>
-    <div style="font-size:12px">SKOR AKHIR • <span id="finalKoin">0</span> KOIN • <span id="finalJarak">0</span>m</div>
-    <div style="margin-top:8px;font-size:11px">Rekor: <b id="rekorVal">0</b></div>
-  </div>
-  <button type="button" class="big-btn orange" id="btnMainLagi">🔄 MAIN MANEH</button>
-  <button type="button" class="big-btn" id="btnMenu">🏠 MENU</button>
-</div>
+
 </div>
 
 <script>
-let cv=document.getElementById('cv');
-let ctx=cv.getContext('2d');
-function resize(){ cv.width=cv.offsetWidth*devicePixelRatio; cv.height=cv.offsetHeight*devicePixelRatio; }
-window.addEventListener('resize',resize); resize();
+// Tampilkan error nek ono, ben ketok masalah-e
+window.onerror=function(msg){ document.getElementById('debug').innerText='Error: '+msg; };
 
-// ===== 🔊 AUDIO =====
-let audioCtx=null, suaraOn=true;
-let mesinOsc=null, mesinOsc2=null, mesinGain=null, mesinFilter=null;
-let sirineOsc=null, sirineGain=null, sirineOn=false;
-function initAudio(){
-  if(audioCtx) return;
-  try{ audioCtx=new (window.AudioContext||window.webkitAudioContext)(); }catch(e){}
+var cv=document.getElementById('cv');
+var ctx=cv.getContext('2d');
+function resize(){ cv.width=cv.offsetWidth; cv.height=cv.offsetHeight; }
+resize();
+window.addEventListener('resize',resize);
+
+var jalan=false, over=false, skor=0, koin=0, jarak=0, wanted=0, bensin=100, nyawa=100;
+var mobil={x:0.5, speed:0, rpm:800, gigi:0, kopling:1, gas:0, rem:false, belok:0, stall:false};
+var koplingTarget=1;
+var musuh=[], koinList=[], bensinList=[];
+var jalanOff=0;
+
+// ===== SUARA SIMPLE =====
+var AC=null, osc=null, gain=null;
+function suaraMulai(){
+  try{
+    if(!AC) AC=new (window.AudioContext||window.webkitAudioContext)();
+    if(AC.state==='suspended') AC.resume();
+    if(!osc){
+      osc=AC.createOscillator(); gain=AC.createGain();
+      osc.type='sawtooth'; gain.gain.value=0;
+      osc.connect(gain); gain.connect(AC.destination); osc.start();
+    }
+  }catch(e){}
 }
-function mulaiMesin(){
-  if(!audioCtx || mesinOsc) return;
-  mesinOsc=audioCtx.createOscillator();
-  mesinOsc2=audioCtx.createOscillator();
-  mesinGain=audioCtx.createGain();
-  mesinFilter=audioCtx.createBiquadFilter();
-  mesinOsc.type='sawtooth'; mesinOsc2.type='square';
-  mesinFilter.type='lowpass'; mesinFilter.frequency.value=800;
-  mesinGain.gain.value=0;
-  mesinOsc.connect(mesinFilter); mesinOsc2.connect(mesinFilter);
-  mesinFilter.connect(mesinGain); mesinGain.connect(audioCtx.destination);
-  mesinOsc.start(); mesinOsc2.start();
+function suaraUpdate(){
+  if(!AC || !osc) return;
+  try{
+    var f=35+(mobil.rpm/8000)*190;
+    osc.frequency.setTargetAtTime(f, AC.currentTime, 0.05);
+    var v = jalan && !mobil.stall ? 0.05 + (mobil.gas?0.07:0) : 0;
+    gain.gain.setTargetAtTime(v, AC.currentTime, 0.08);
+  }catch(e){}
 }
-function updateMesin(){
-  if(!audioCtx || !mesinOsc || !suaraOn) return;
-  let t=audioCtx.currentTime;
-  let freq = 35 + (mobil.rpm/8000)*190;
-  if(mobil.kopling<0.3) freq*=1.15;
-  mesinOsc.frequency.setTargetAtTime(freq, t, 0.05);
-  mesinOsc2.frequency.setTargetAtTime(freq*0.5+2, t, 0.05);
-  let vol = mobil.stall ? 0 : 0.04 + (mobil.gas?0.08:0.02) + (mobil.speed/185)*0.05;
-  if(!game.jalan) vol=0;
-  mesinGain.gain.setTargetAtTime(suaraOn?vol:0, t, 0.08);
-  mesinFilter.frequency.setTargetAtTime(400 + (mobil.rpm/8000)*1800, t, 0.1);
+function bip(frekuensi, durasi){
+  if(!AC) return;
+  try{
+    var o=AC.createOscillator(), g=AC.createGain();
+    o.type='sine'; o.frequency.value=frekuensi;
+    g.gain.setValueAtTime(0.15, AC.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, AC.currentTime+durasi);
+    o.connect(g); g.connect(AC.destination); o.start(); o.stop(AC.currentTime+durasi);
+  }catch(e){}
 }
-function bunyiKoin(){
-  if(!audioCtx || !suaraOn) return;
-  let o=audioCtx.createOscillator(), g=audioCtx.createGain();
-  o.type='sine'; o.frequency.setValueAtTime(880, audioCtx.currentTime);
-  o.frequency.setValueAtTime(1320, audioCtx.currentTime+0.08);
-  g.gain.setValueAtTime(0.15, audioCtx.currentTime);
-  g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime+0.3);
-  o.connect(g); g.connect(audioCtx.destination); o.start(); o.stop(audioCtx.currentTime+0.3);
+
+// ===== MULAI GAME - PALING SIMPLE =====
+function mulaiGame(pakeSuara){
+  document.getElementById('debug').innerText='Status: Mulai...';
+  if(pakeSuara) suaraMulai();
+  jalan=true; over=false; skor=0; koin=0; jarak=0; wanted=0; bensin=100; nyawa=100;
+  mobil={x:0.5, speed:0, rpm:800, gigi:0, kopling:1, gas:0, rem:false, belok:0, stall:false};
+  koplingTarget=1; musuh=[]; koinList=[]; bensinList=[];
+  var m=document.getElementById('menu');
+  m.classList.add('hilang');
+  m.style.display='none';
+  document.getElementById('pesan').style.display='none';
+  alert('Game dimulai! Tahan KOPLING + GAS, terus pencet + GIGI');
 }
-function bunyiTabrakan(){
-  if(!audioCtx || !suaraOn) return;
-  let bufferSize=audioCtx.sampleRate*0.25;
-  let buffer=audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-  let data=buffer.getChannelData(0);
-  for(let i=0;i<bufferSize;i++) data[i]=(Math.random()*2-1)*(1-i/bufferSize);
-  let noise=audioCtx.createBufferSource(); noise.buffer=buffer;
-  let g=audioCtx.createGain(); g.gain.value=0.35;
-  let f=audioCtx.createBiquadFilter(); f.type='lowpass'; f.frequency.value=600;
-  noise.connect(f); f.connect(g); g.connect(audioCtx.destination); noise.start();
-  let o=audioCtx.createOscillator(); let g2=audioCtx.createGain();
-  o.type='sine'; o.frequency.setValueAtTime(120, audioCtx.currentTime);
-  o.frequency.exponentialRampToValueAtTime(30, audioCtx.currentTime+0.25);
-  g2.gain.setValueAtTime(0.4, audioCtx.currentTime);
-  g2.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime+0.3);
-  o.connect(g2); g2.connect(audioCtx.destination); o.start(); o.stop(audioCtx.currentTime+0.3);
+
+// Tombol mulai - 3 cara biar mesti ke-klik
+document.getElementById('btnMulai').onclick=function(){ mulaiGame(false); };
+document.getElementById('btnMulai2').onclick=function(){ mulaiGame(true); };
+document.getElementById('btnMulai').ontouchstart=function(){ mulaiGame(false); };
+document.getElementById('btnMulai2').ontouchstart=function(){ mulaiGame(true); };
+
+// ===== KONTROL =====
+function tahan(id, on, off){
+  var el=document.getElementById(id);
+  el.ontouchstart=function(e){ e.preventDefault(); on(); };
+  el.ontouchend=function(e){ e.preventDefault(); off(); };
+  el.onmousedown=function(){ on(); };
+  el.onmouseup=function(){ off(); };
+  el.onmouseleave=function(){ off(); };
 }
-function bunyiGigi(){
-  if(!audioCtx || !suaraOn) return;
-  let o=audioCtx.createOscillator(), g=audioCtx.createGain();
-  o.type='square'; o.frequency.setValueAtTime(220, audioCtx.currentTime);
-  o.frequency.setValueAtTime(180, audioCtx.currentTime+0.05);
-  g.gain.setValueAtTime(0.12, audioCtx.currentTime);
-  g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime+0.12);
-  o.connect(g); g.connect(audioCtx.destination); o.start(); o.stop(audioCtx.currentTime+0.12);
-}
-function bunyiKlakson(){
-  if(!audioCtx || !suaraOn) return;
-  let o=audioCtx.createOscillator(), o2=audioCtx.createOscillator(), g=audioCtx.createGain();
-  o.type='sawtooth'; o.frequency.value=370; o2.type='sawtooth'; o2.frequency.value=440;
-  g.gain.setValueAtTime(0.18, audioCtx.currentTime);
-  g.gain.setValueAtTime(0.18, audioCtx.currentTime+0.35);
-  g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime+0.4);
-  o.connect(g); o2.connect(g); g.connect(audioCtx.destination);
-  o.start(); o2.start(); o.stop(audioCtx.currentTime+0.4); o2.stop(audioCtx.currentTime+0.4);
-}
-function bunyiMogok(){
-  if(!audioCtx || !suaraOn) return;
-  for(let i=0;i<4;i++){
-    let o=audioCtx.createOscillator(), g=audioCtx.createGain();
-    o.type='sawtooth'; o.frequency.value=90 - i*15;
-    let t0=audioCtx.currentTime + i*0.18;
-    g.gain.setValueAtTime(0.0001, t0);
-    g.gain.exponentialRampToValueAtTime(0.2, t0+0.03);
-    g.gain.exponentialRampToValueAtTime(0.001, t0+0.15);
-    o.connect(g); g.connect(audioCtx.destination); o.start(t0); o.stop(t0+0.18);
+tahan('gas', function(){ mobil.gas=1; suaraMulai(); }, function(){ mobil.gas=0; });
+tahan('rem', function(){ mobil.rem=true; }, function(){ mobil.rem=false; });
+tahan('kiri', function(){ mobil.belok=-1; }, function(){ if(mobil.belok===-1) mobil.belok=0; });
+tahan('kanan', function(){ mobil.belok=1; }, function(){ if(mobil.belok===1) mobil.belok=0; });
+tahan('kopling', function(){ koplingTarget=0; }, function(){
+  // Lepas kopling
+  if(mobil.gigi===1 && mobil.speed<8 && mobil.rpm<2200 && !mobil.stall){
+    if(Math.random()<0.7){ mogok(); koplingTarget=1; return; }
   }
-}
-function bunyiPerfect(){
-  if(!audioCtx || !suaraOn) return;
-  let notes=[523,659,784,1046];
-  notes.forEach((f,i)=>{
-    let o=audioCtx.createOscillator(), g=audioCtx.createGain();
-    o.type='triangle'; o.frequency.value=f;
-    let t0=audioCtx.currentTime + i*0.09;
-    g.gain.setValueAtTime(0.0001, t0);
-    g.gain.exponentialRampToValueAtTime(0.18, t0+0.02);
-    g.gain.exponentialRampToValueAtTime(0.001, t0+0.25);
-    o.connect(g); g.connect(audioCtx.destination); o.start(t0); o.stop(t0+0.3);
-  });
-}
-function bunyiBensin(){
-  if(!audioCtx || !suaraOn) return;
-  let o=audioCtx.createOscillator(), g=audioCtx.createGain();
-  o.type='sine'; o.frequency.setValueAtTime(300, audioCtx.currentTime);
-  o.frequency.linearRampToValueAtTime(600, audioCtx.currentTime+0.4);
-  g.gain.setValueAtTime(0.12, audioCtx.currentTime);
-  g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime+0.5);
-  o.connect(g); g.connect(audioCtx.destination); o.start(); o.stop(audioCtx.currentTime+0.5);
-}
-function bunyiStartMesin(){
-  if(!audioCtx || !suaraOn) return;
-  let o=audioCtx.createOscillator(), g=audioCtx.createGain();
-  o.type='sawtooth'; o.frequency.setValueAtTime(40, audioCtx.currentTime);
-  o.frequency.linearRampToValueAtTime(90, audioCtx.currentTime+0.6);
-  g.gain.setValueAtTime(0.15, audioCtx.currentTime);
-  g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime+0.7);
-  o.connect(g); g.connect(audioCtx.destination); o.start(); o.stop(audioCtx.currentTime+0.7);
-}
-function mulaiSirine(){
-  if(!audioCtx || sirineOn || !suaraOn) return;
-  sirineOn=true;
-  sirineOsc=audioCtx.createOscillator();
-  sirineGain=audioCtx.createGain();
-  sirineOsc.type='sine'; sirineGain.gain.value=0.06;
-  sirineOsc.connect(sirineGain); sirineGain.connect(audioCtx.destination);
-  sirineOsc.start();
-  let naik=true;
-  sirineOsc._interval=setInterval(()=>{
-    if(!sirineOsc) return;
-    let f = naik ? 850 : 650;
-    sirineOsc.frequency.setTargetAtTime(f, audioCtx.currentTime, 0.1);
-    naik=!naik;
-  }, 400);
-}
-function stopSirine(){
-  if(sirineOsc){ clearInterval(sirineOsc._interval); try{sirineOsc.stop();}catch(e){} sirineOsc=null; sirineOn=false; }
-}
-function toggleSuara(){
-  suaraOn=!suaraOn;
-  let btn=document.getElementById('btnSuara');
-  btn.innerText= suaraOn ? '🔊' : '🔇';
-  btn.classList.toggle('mute', !suaraOn);
-  if(!suaraOn){ if(mesinGain) mesinGain.gain.value=0; stopSirine(); }
-  else{ if(audioCtx) audioCtx.resume(); }
-}
-document.getElementById('btnSuara').addEventListener('click', (e)=>{ e.stopPropagation(); initAudio(); toggleSuara(); });
-
-// ===== STATE =====
-let game={jalan:false, over:false, skor:0, koin:0, jarak:0, wanted:0, bensin:100, nyawa:100};
-let mobil={x:0.5, y:0.82, vx:0, speed:0, rpm:800, gigi:0, kopling:1, gas:0, rem:false, belok:0, stall:false, stallTimer:0};
-let jalanOffset=0;
-let musuh=[], koinList=[], bensinList=[], polisi=[];
-let lastTime=0;
-let perfectTimer=0;
-let sudahMulai=false;
-function resetGame(){
-  game={jalan:true, over:false, skor:0, koin:0, jarak:0, wanted:0, bensin:100, nyawa:100};
-  mobil={x:0.5, y:0.82, vx:0, speed:0, rpm:800, gigi:0, kopling:1, gas:0, rem:false, belok:0, stall:false, stallTimer:0};
-  musuh=[]; koinList=[]; bensinList=[]; polisi=[];
-  document.getElementById('menuAwal').classList.add('hilang');
-  document.getElementById('menuGameOver').classList.add('hilang');
-  document.getElementById('stallBox').classList.add('hilang');
-  document.getElementById('btnStart').classList.remove('hilang');
-  document.getElementById('controls').classList.add('aktif');
-  updateHUD();
-}
-function mulaiGame(){
-  if(sudahMulai && game.jalan) return;
-  sudahMulai=true;
-  initAudio();
-  if(audioCtx) audioCtx.resume();
-  mulaiMesin();
-  bunyiStartMesin();
-  resetGame();
-}
-// FIX TOMBOL MULAI - 3 cara sekaligus
-let btnMulai=document.getElementById('btnMulai');
-btnMulai.addEventListener('click', (e)=>{ e.stopPropagation(); mulaiGame(); });
-btnMulai.addEventListener('touchstart', (e)=>{ e.stopPropagation(); mulaiGame(); }, {passive:true});
-document.getElementById('menuAwal').addEventListener('click', (e)=>{
-  if(e.target.id==='btnItch') return;
-  if(e.target.id==='btnMulai') return;
-  // Pencet layar ngendi wae = mulai
-  mulaiGame();
+  if(mobil.gigi===1 && mobil.speed<5 && mobil.rpm>=3500 && mobil.rpm<=5500){
+    skor+=500; document.getElementById('perfect').style.display='block';
+    setTimeout(function(){ document.getElementById('perfect').style.display='none'; },1500);
+    bip(880,0.3);
+  }
+  koplingTarget=1;
 });
-document.getElementById('btnItch').addEventListener('click', (e)=>{ e.stopPropagation(); window.open('https://astranovagame.itch.io/half-clutch','_blank'); });
-document.getElementById('btnMainLagi').addEventList
+tahan('klakson', function(){ bip(440,0.3); }, function(){});
+
+document.getElementById('gigiPlus').onclick=function(){
+  if(mobil.gigi<5){
+    if(mobil.kopling<0.4){ mobil.gigi++; mobil.rpm=Math.max(1200, mobil.rpm*0.6); bip(220,0.1); }
+    else{ mobil.rpm=Math.max(800, mobil.rpm-1000); }
+  }
+};
+document.getElementById('gigiMin').onclick=function(){
+  if(mobil.gigi>0){ mobil.gigi--; mobil.rpm=Math.min(7500, mobil.rpm+800); bip(220,0.1); }
+};
+document.getElementById('btnStart').onclick=function(){
+  if(mobil.stall){ mobil.stall=false; mobil.rpm=800; mobil.gigi=0; document.getElementById('pesan').style.display='none'; document.getElementById('btnStart').style.display='none'; }
+};
+
+function mogok(){
+  mobil.stall=true; mobil.speed=0; mobil.rpm=800;
+  document.getElementById('pesan').innerText='🚨 MOGOK! PENCET START';
+  document.getElementById('pesan').style.display='block';
+  document.getElementById('btnStart').style.display='flex';
+  if(navigator.vibrate) navigator.vibrate([100,50,100]);
+}
+
+function update(){
+  if(!jalan || over) return;
+  mobil.kopling += (koplingTarget - mobil.kopling)*0.12;
+  if(!mobil.stall){
+    if(mobil.gigi===0){
+      var target = mobil.gas ? 7500 : 900;
+      mobil.rpm += (target - mobil.rpm)*0.08;
+    }else{
+      var target2;
+      if(mobil.kopling<0.3) target2 = mobil.gas ? 6500 : 1200;
+      else target2 = 1000 + mobil.speed*55 + (mobil.gas?1500:0);
+      mobil.rpm += (target2 - mobil.rpm)*0.06;
+      if(mobil.rpm>7800) mobil.rpm=7800;
+    }
+    if(mobil.gigi>0 && mobil.kopling>0.6){
+      var power=[0,0.35,0.55,0.75,0.95,1.1][mobil.gigi];
+      if(mobil.gas) mobil.speed += power*0.28; else mobil.speed -= 0.12;
+    }else if(mobil.gigi===0){ mobil.speed=Math.max(0, mobil.speed-0.25); }
+    else{ mobil.speed=Math.max(0, mobil.speed-0.08); }
+    if(mobil.rem) mobil.speed=Math.max(0, mobil.speed-0.9);
+    var maks=[0,45,75,110,145,185][mobil.gigi];
+    if(mobil.gigi>0 && mobil.speed>maks) mobil.speed=maks;
+  }else{
+    mobil.speed=Math.max(0, mobil.speed-0.3);
+  }
+  mobil.x += mobil.belok * mobil.speed * 0.0025;
+  mobil.x=Math.max(0.14, Math.min(0.86, mobil.x));
+  jalanOff += mobil.speed*0.002;
+  jarak += mobil.speed*0.008;
+  skor += Math.floor(mobil.speed*0.05);
+  if(mobil.gas && mobil.speed>5) bensin-=0.012;
+  if(bensin<=0){ bensin=0; mobil.speed=Math.max(0, mobil.speed-0.5); if(mobil.speed===0){ gameOver('Bensin entek!'); } }
+
+  if(Math.random()<0.025 && musuh.length<4) musuh.push({x:0.18+Math.random()*0.64, y:-0.1, sp:0.25+Math.random()*0.3, warna:['#ff5252','#ffeb3b','#29b6f6'][Math.floor(Math.random()*3)]});
+  if(Math.random()<0.02) koinList.push({x:0.18+Math.random()*0.64, y:-0.1});
+  if(Math.random()<0.006 && bensin<60) bensinList.push({x:0.18+Math.random()*0.64, y:-0.1});
+
+  for(var i=musuh.length-1;i>=0;i--){
+    var m=musuh[i]; m.y+=0.006 + (m.sp*0.005) - mobil.speed*0.00002;
+    if(m.y>1.1) musuh.splice(i,1);
+    if(Math.abs(m.x-mobil.x)<0.09 && Math.abs(m.y-0.82)<0.07){
+      musuh.splice(i,1); nyawa-=28; wanted=Math.min(5, wanted+1); mobil.speed*=0.35;
+      if(navigator.vibrate) navigator.vibrate(100);
+      if(nyawa<=0) gameOver('Mobil rusak! 💥');
+    }
+  }
+  for(var i=koinList.length-1;i>=0;i--){
+    var k=koinList[i]; k.y+=0.007;
+    if(k.y>1.1) koinList.splice(i,1);
+    if(Math.abs(k.x-mobil.x)<0.07 && Math.abs(k.y-0.82)<0.06){ koinList.splice(i,1); koin++; skor+=100; bip(880,0.2); }
+  }
+  for(var i=bensinList.length-1;i>=0;i--){
+    var b=bensinList[i]; b.y+=0.006;
+    if(b.y>1.1) bensinList.splice(i,1);
+    if(Math.abs(b.x-mobil.x)<0.07 && Math.abs(b.y-0.82)<0.06){ bensinList.splice(i,1); bensin=Math.min(100,bensin+35); skor+=50; bip(500,0.3); }
+  }
+  // HUD
+  document.getElementById('skor').innerText=skor;
+  document.getElementById('koin').innerText=koin;
+  document.getElementById('jarak').innerText=Math.floor(jarak)+'m';
+  var st=''; for(var s=0;s<5;s++) st+= s<Math.floor(wanted)?'★':'☆';
+  document.getElementById('wanted').innerText=st;
+  document.getElementById('speed').innerText=Math.floor(mobil.speed);
+  document.getElementById('rpm').innerText=Math.floor(mobil.rpm);
+  document.getElementById('gigi').innerText= mobil.gigi===0?'N':mobil.gigi;
+  document.getElementById('rpmBar').style.width=(mobil.rpm/8000*100)+'%';
+  document.getElementById('rpmBar').style.background= mobil.rpm>6000?'#f00':mobil.rpm>4000?'#ff0':'#0f0';
+  document.getElementById('clutchBar').style.width=(mobil.kopling*100)+'%';
+  document.getElementById('clutchTxt').innerText= mobil.stall?'MOGOK':mobil.kopling<0.3?'DITEKAN':mobil.kopling>0.35&&mobil.kopling<0.65?'HALF CLUTCH ✅':'LEPAS';
+  document.getElementById('bensin').innerText=Math.floor(bensin)+'%';
+  document.getElementById('bensinBar').style.width=bensin+'%';
+  suaraUpdate();
+}
+function gameOver(teks){
+  over=true; jalan=false;
+  alert(teks+'\nSkor: '+skor+'\nPencet OK gawe main maneh');
+  var m=document.getElementById('menu');
+  m.classList.remove('hilang'); m.style.display='flex';
+  document.getElementById('debug').innerText='Game Over - '+teks+' - Skor: '+skor;
+}
+function gambar(){
+  var w=cv.width, h=cv.height;
+  ctx.fillStyle='#2d4a2d'; ctx.fillRect(0,0,w,h);
+  var jx=w*0.12, jw=w*0.76;
+  ctx.fillStyle='#333'; ctx.fillRect(jx,0,jw,h);
+  ctx.fillStyle='#ffeb3b'; ctx.fillRect(jx,0,4,h); ctx.fillRect(jx+jw-4,0,4,h);
+  ctx.fillStyle='#fff';
+  var off=(jalanOff*h)%80;
+  for(var y=-80+off;y<h;y+=80) ctx.fillRect(w/2-3,y,6,40);
+  for(var i=0;i<koinList.length;i++){
+    var k=koinList[i]; ctx.fillStyle='#ffcc00'; ctx.beginPath(); ctx.arc(k.x*w,k.y*h,12,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle='#000'; ctx.font='bold 12px Arial'; ctx.textAlign='center'; ctx.fillText('🪙',k.x*w,k.y*h+4);
+  }
+  for(var i=0;i<bensinList.length;i++){
+    var b=bensinList[i]; ctx.fillStyle='#ff9800'; ctx.fillRect(b.x*w-14,b.y*h-14,28,28);
+    ctx.fillStyle='#fff'; ctx.font='bold 14px Arial'; ctx.textAlign='center'; ctx.fillText('⛽',b.x*w,b.y*h+5);
+  }
+  for(var i=0;i<musuh.length;i++) gambarMobil(musuh[i].x, musuh[i].y, musuh[i].warna, false);
+  gambarMobil(mobil.x, 0.82, '#ff9800', true);
+}
+function gambarMobil(x,y,warna,pemain){
+  var w=cv.width, h=cv.height;
+  var mw=w*0.11, mh=h*0.085;
+  var px=x*w-mw/2, py=y*h-mh/2;
+  ctx.fillStyle=warna; ctx.fillRect(px,py,mw,mh);
+  ctx.fillStyle='#b3e5fc'; ctx.fillRect(px+mw*0.12,py+mh*0.18,mw*0.76,mh*0.22);
+  ctx.fillStyle='#b3e5fc'; ctx.fillRect(px+mw*0.12,py+mh*0.62,mw*0.76,mh*0.22);
+  ctx.fillStyle='#fff59d'; ctx.fillRect(px+4,py+2,10,5); ctx.fillRect(px+mw-14,py+2,10,5);
+  if(pemain){ ctx.fillStyle='#fff'; ctx.font='bold 10px Arial'; ctx.textAlign='center'; ctx.fillText('YOU',px+mw/2,py+mh*0.52); }
+}
+function loop(){
+  update(); gambar(); requestAnimationFrame(loop);
+}
+loop();
+</script>
+</body>
+</html>
