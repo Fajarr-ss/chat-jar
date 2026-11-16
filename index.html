@@ -8,23 +8,23 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,Arial,sans-serif;-webkit-tap-highlight-color:transparent;user-select:none}
 body{background:#0a0a0a;color:#fff;overflow:hidden;height:100vh;height:100dvh}
 #gameWrap{position:relative;width:100%;height:100dvh;max-width:480px;margin:0 auto;background:#1a2b1a;overflow:hidden}
-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;background:#2d4a2d}
+canvas{position:absolute;inset:0;width:100%;height:100%;display:block;background:#2d4a2d;pointer-events:none}
 .hud{position:absolute;top:0;left:0;right:0;z-index:5;padding:10px;display:flex;justify-content:space-between;gap:8px;pointer-events:none}
 .hud-box{background:rgba(0,0,0,.65);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.25);border-radius:14px;padding:7px 10px;text-align:center;min-width:62px}
 .hud-box b{font-size:16px;display:block;line-height:1}
 .hud-box span{font-size:9px;color:rgba(255,255,255,.7);letter-spacing:.5px}
 .wanted{color:#ffcc00}
-.speedo{position:absolute;left:10px;bottom:182px;z-index:5;background:rgba(0,0,0,.7);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.25);border-radius:18px;padding:10px 12px;width:132px}
+.speedo{position:absolute;left:10px;bottom:182px;z-index:5;background:rgba(0,0,0,.7);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.25);border-radius:18px;padding:10px 12px;width:132px;pointer-events:none}
 .speedo h3{font-size:10px;color:rgba(255,255,255,.7)}
 .speedo .speed{font-size:32px;font-weight:900;line-height:1}
 .speedo .speed small{font-size:12px}
 .rpm-bar{height:10px;background:#222;border-radius:99px;overflow:hidden;margin-top:6px;border:1px solid rgba(255,255,255,.2)}
 .rpm-fill{height:100%;width:0%;background:linear-gradient(90deg,#00e676,#ffeb3b,#ff1744);transition:width .08s linear}
 .rpm-label{font-size:10px;margin-top:4px;color:rgba(255,255,255,.8)}
-.gear-box{position:absolute;right:10px;bottom:182px;z-index:5;background:rgba(0,0,0,.7);border:1px solid rgba(255,255,255,.25);border-radius:18px;padding:10px 12px;text-align:center;width:86px}
+.gear-box{position:absolute;right:10px;bottom:182px;z-index:5;background:rgba(0,0,0,.7);border:1px solid rgba(255,255,255,.25);border-radius:18px;padding:10px 12px;text-align:center;width:86px;pointer-events:none}
 .gear-box .gigi{font-size:36px;font-weight:900;line-height:1}
 .gear-box span{font-size:9px;color:rgba(255,255,255,.7)}
-.clutch-box{position:absolute;left:50%;transform:translateX(-50%);bottom:182px;z-index:5;background:rgba(0,0,0,.75);border:1px solid rgba(255,255,255,.25);border-radius:18px;padding:10px 12px;width:150px;text-align:center}
+.clutch-box{position:absolute;left:50%;transform:translateX(-50%);bottom:182px;z-index:5;background:rgba(0,0,0,.75);border:1px solid rgba(255,255,255,.25);border-radius:18px;padding:10px 12px;width:150px;text-align:center;pointer-events:none}
 .clutch-box b{font-size:11px}
 .clutch-meter{position:relative;height:14px;background:#333;border-radius:99px;margin-top:6px;overflow:hidden;border:1px solid rgba(255,255,255,.2)}
 .clutch-green{position:absolute;left:42%;width:24%;height:100%;background:rgba(0,230,118,.6);border-left:2px solid #00e676;border-right:2px solid #00e676}
@@ -32,16 +32,16 @@ canvas{position:absolute;inset:0;width:100%;height:100%;display:block;background
 .clutch-label{font-size:9px;margin-top:4px}
 .clutch-label.ok{color:#00e676;font-weight:800}
 .clutch-label.bad{color:#ff5252;font-weight:800}
-.fuel{position:absolute;left:10px;top:68px;z-index:5;background:rgba(0,0,0,.6);border-radius:12px;padding:6px 10px;font-size:11px;border:1px solid rgba(255,255,255,.2)}
+.fuel{position:absolute;left:10px;top:68px;z-index:5;background:rgba(0,0,0,.6);border-radius:12px;padding:6px 10px;font-size:11px;border:1px solid rgba(255,255,255,.2);pointer-events:none}
 .fuel-bar{width:90px;height:7px;background:#333;border-radius:99px;overflow:hidden;margin-top:4px}
 .fuel-fill{height:100%;background:#ff9800;width:100%;transition:width .3s}
-/* TOMBOL SUARA */
 .sound-btn{position:absolute;right:10px;top:110px;z-index:8;width:44px;height:44px;border-radius:50%;border:2px solid rgba(255,255,255,.5);background:rgba(0,0,0,.65);color:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center}
 .sound-btn.mute{background:rgba(255,23,68,.6)}
-.controls{position:absolute;bottom:0;left:0;right:0;z-index:6;padding:10px;padding-bottom:calc(10px + env(safe-area-inset-bottom));display:flex;justify-content:space-between;align-items:flex-end;gap:8px;background:linear-gradient(to top, rgba(0,0,0,.55), transparent)}
+.controls{position:absolute;bottom:0;left:0;right:0;z-index:6;padding:10px;padding-bottom:calc(10px + env(safe-area-inset-bottom));display:flex;justify-content:space-between;align-items:flex-end;gap:8px;background:linear-gradient(to top, rgba(0,0,0,.55), transparent);pointer-events:none}
+.controls.aktif{pointer-events:auto}
 .col{display:flex;flex-direction:column;gap:8px;align-items:center}
 .row{display:flex;gap:8px}
-.btn{width:66px;height:66px;border-radius:50%;border:2px solid rgba(255,255,255,.5);background:rgba(255,255,255,.15);backdrop-filter:blur(10px);color:#fff;font-size:22px;display:flex;align-items:center;justify-content:center;flex-direction:column;cursor:pointer;touch-action:none}
+.btn{width:66px;height:66px;border-radius:50%;border:2px solid rgba(255,255,255,.5);background:rgba(255,255,255,.15);backdrop-filter:blur(10px);color:#fff;font-size:22px;display:flex;align-items:center;justify-content:center;flex-direction:column;cursor:pointer;touch-action:none;pointer-events:auto}
 .btn:active{transform:scale(.92);background:rgba(255,255,255,.35)}
 .btn small{font-size:8px;font-weight:800;letter-spacing:.5px}
 .btn.gas{background:rgba(0,200,83,.35);border-color:#00e676;width:78px;height:78px}
@@ -53,14 +53,16 @@ canvas{position:absolute;inset:0;width:100%;height:100%;display:block;background
 .btn.start{background:#fff;color:#000;width:88px;height:44px;border-radius:99px;font-size:13px;font-weight:900}
 .btn.klakson{background:rgba(255,235,59,.3);border-color:#ffeb3b;width:52px;height:52px;font-size:18px}
 .center-col{align-items:center}
-.overlay{position:absolute;inset:0;z-index:20;background:rgba(0,0,0,.75);backdrop-filter:blur(8px);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center}
+/* OVERLAY - FIX PENCET */
+.overlay{position:absolute;inset:0;z-index:100 !important;background:rgba(0,0,0,.78);backdrop-filter:blur(8px);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;pointer-events:auto !important;touch-action:manipulation;overflow-y:auto}
 .overlay h1{font-size:38px;font-weight:900;letter-spacing:-1px;line-height:1}
 .overlay h1 span{color:#ff9800}
 .overlay p{font-size:13px;color:rgba(255,255,255,.75);line-height:1.6;margin:12px 0}
-.overlay .cara{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);border-radius:18px;padding:14px;text-align:left;font-size:12px;line-height:1.7;width:100%;max-width:340px}
-.big-btn{width:100%;max-width:340px;padding:14px;border:none;border-radius:16px;background:#fff;color:#111;font-weight:900;font-size:16px;margin-top:14px;cursor:pointer}
+.overlay .cara{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);border-radius:18px;padding:14px;text-align:left;font-size:12px;line-height:1.7;width:100%;max-width:340px;pointer-events:none}
+.big-btn{width:100%;max-width:340px;padding:16px;border:none;border-radius:16px;background:#fff;color:#111;font-weight:900;font-size:17px;margin-top:14px;cursor:pointer;pointer-events:auto !important;touch-action:manipulation;position:relative;z-index:101}
 .big-btn.orange{background:#ff9800;color:#000}
-.hilang{display:none}
+.big-btn:active{transform:scale(.97)}
+.hilang{display:none !important}
 .stall{position:absolute;top:42%;left:50%;transform:translate(-50%,-50%);z-index:15;background:#ff1744;color:#fff;padding:12px 18px;border-radius:14px;font-weight:900;font-size:18px;box-shadow:0 10px 30px rgba(0,0,0,.5);animation:kedip .5s infinite alternate}
 @keyframes kedip{from{transform:translate(-50%,-50%) scale(1)}to{transform:translate(-50%,-50%) scale(1.05)}}
 .perfect{position:absolute;top:32%;left:50%;transform:translate(-50%,-50%);z-index:15;background:#00e676;color:#000;padding:10px 16px;border-radius:99px;font-weight:900;font-size:14px;pointer-events:none}
@@ -76,7 +78,7 @@ canvas{position:absolute;inset:0;width:100%;height:100%;display:block;background
   <div class="hud-box"><b class="wanted" id="hudWanted">★☆☆☆☆</b><span>POLISI</span></div>
 </div>
 <div class="fuel">⛽ BENSIN<div class="fuel-bar"><div class="fuel-fill" id="fuelFill"></div></div><span id="fuelText">100%</span></div>
-<button class="sound-btn" id="btnSuara" onclick="toggleSuara()">🔊</button>
+<button type="button" class="sound-btn" id="btnSuara">🔊</button>
 <div class="speedo">
   <h3>SPEEDOMETER</h3>
   <div class="speed"><span id="speedVal">0</span> <small>km/h</small></div>
@@ -94,7 +96,7 @@ canvas{position:absolute;inset:0;width:100%;height:100%;display:block;background
 </div>
 <div id="stallBox" class="stall hilang">🚨 MOGOK! START ULANG</div>
 <div id="perfectBox" class="perfect hilang">🔥 PERFECT START! +500</div>
-<div class="controls">
+<div class="controls" id="controls">
   <div class="col">
     <div class="row">
       <div class="btn" id="btnKiri">◀<small>BELOK</small></div>
@@ -106,7 +108,7 @@ canvas{position:absolute;inset:0;width:100%;height:100%;display:block;background
     </div>
   </div>
   <div class="col center-col">
-    <button class="btn start hilang" id="btnStart">▶ START</button>
+    <button type="button" class="btn start hilang" id="btnStart">▶ START</button>
     <div class="btn klakson" id="btnKlakson">📯<small>KLAKSON</small></div>
     <div style="font-size:10px;color:rgba(255,255,255,.7);text-align:center">TAHAN KOPLING<br>SEBELUM START</div>
   </div>
@@ -132,10 +134,11 @@ canvas{position:absolute;inset:0;width:100%;height:100%;display:block;background
     5. Ganti gigi <b>+ / −</b>, kopling tiap ganti gigi<br>
     6. Hindari mobil, jupuk 🪙 & ⛽<br>
     7. Nabrak = Polisi ngejar! ★ naik<br><br>
-    <b>🔊 SUARA:</b> Mesin, klakson, tabrakan, koin, sirine polisi, mogok. Pencet tombol 🔊 neng pojok kanan gawe mute.
+    <b>🔊 SUARA:</b> Mesin, klakson, tabrakan, koin, sirine polisi, mogok.
   </div>
-  <button class="big-btn orange" onclick="mulaiGame()">▶️ MULAI NYETIR 🔊</button>
-  <button class="big-btn" onclick="window.open('https://astranovagame.itch.io/half-clutch','_blank')">🌐 Mainkan Half Clutch Asli di itch.io</button>
+  <button type="button" class="big-btn orange" id="btnMulai">▶️ MULAI NYETIR 🔊</button>
+  <button type="button" class="big-btn" id="btnItch">🌐 Mainkan Half Clutch Asli di itch.io</button>
+  <p style="font-size:11px;margin-top:8px">Nek tombol nduwur ora iso dipencet, pencet layar ngendi wae, langsung mulai.</p>
 </div>
 <div class="overlay hilang" id="menuGameOver">
   <h1>GAME<br><span>OVER</span></h1>
@@ -145,28 +148,24 @@ canvas{position:absolute;inset:0;width:100%;height:100%;display:block;background
     <div style="font-size:12px">SKOR AKHIR • <span id="finalKoin">0</span> KOIN • <span id="finalJarak">0</span>m</div>
     <div style="margin-top:8px;font-size:11px">Rekor: <b id="rekorVal">0</b></div>
   </div>
-  <button class="big-btn orange" onclick="mulaiGame()">🔄 MAIN MANEH</button>
-  <button class="big-btn" onclick="location.reload()">🏠 MENU</button>
+  <button type="button" class="big-btn orange" id="btnMainLagi">🔄 MAIN MANEH</button>
+  <button type="button" class="big-btn" id="btnMenu">🏠 MENU</button>
 </div>
 </div>
 
 <script>
 let cv=document.getElementById('cv');
 let ctx=cv.getContext('2d');
-let W,H;
-function resize(){ W=cv.width=cv.offsetWidth*devicePixelRatio; H=cv.height=cv.offsetHeight*devicePixelRatio; }
+function resize(){ cv.width=cv.offsetWidth*devicePixelRatio; cv.height=cv.offsetHeight*devicePixelRatio; }
 window.addEventListener('resize',resize); resize();
 
-// ===== 🔊 AUDIO ENGINE - WEB AUDIO API =====
+// ===== 🔊 AUDIO =====
 let audioCtx=null, suaraOn=true;
 let mesinOsc=null, mesinOsc2=null, mesinGain=null, mesinFilter=null;
 let sirineOsc=null, sirineGain=null, sirineOn=false;
-
 function initAudio(){
   if(audioCtx) return;
-  try{
-    audioCtx=new (window.AudioContext||window.webkitAudioContext)();
-  }catch(e){ return; }
+  try{ audioCtx=new (window.AudioContext||window.webkitAudioContext)(); }catch(e){}
 }
 function mulaiMesin(){
   if(!audioCtx || mesinOsc) return;
@@ -174,27 +173,20 @@ function mulaiMesin(){
   mesinOsc2=audioCtx.createOscillator();
   mesinGain=audioCtx.createGain();
   mesinFilter=audioCtx.createBiquadFilter();
-  mesinOsc.type='sawtooth';
-  mesinOsc2.type='square';
-  mesinFilter.type='lowpass';
-  mesinFilter.frequency.value=800;
+  mesinOsc.type='sawtooth'; mesinOsc2.type='square';
+  mesinFilter.type='lowpass'; mesinFilter.frequency.value=800;
   mesinGain.gain.value=0;
-  mesinOsc.connect(mesinFilter);
-  mesinOsc2.connect(mesinFilter);
-  mesinFilter.connect(mesinGain);
-  mesinGain.connect(audioCtx.destination);
+  mesinOsc.connect(mesinFilter); mesinOsc2.connect(mesinFilter);
+  mesinFilter.connect(mesinGain); mesinGain.connect(audioCtx.destination);
   mesinOsc.start(); mesinOsc2.start();
 }
 function updateMesin(){
   if(!audioCtx || !mesinOsc || !suaraOn) return;
   let t=audioCtx.currentTime;
-  // Frekuensi mesin ngikut RPM: 800 RPM = 40Hz, 8000 RPM = 220Hz
   let freq = 35 + (mobil.rpm/8000)*190;
-  // Nek kopling ditekan, suara lebih nggereng
   if(mobil.kopling<0.3) freq*=1.15;
   mesinOsc.frequency.setTargetAtTime(freq, t, 0.05);
   mesinOsc2.frequency.setTargetAtTime(freq*0.5+2, t, 0.05);
-  // Volume ngikut gas + speed
   let vol = mobil.stall ? 0 : 0.04 + (mobil.gas?0.08:0.02) + (mobil.speed/185)*0.05;
   if(!game.jalan) vol=0;
   mesinGain.gain.setTargetAtTime(suaraOn?vol:0, t, 0.08);
@@ -207,12 +199,10 @@ function bunyiKoin(){
   o.frequency.setValueAtTime(1320, audioCtx.currentTime+0.08);
   g.gain.setValueAtTime(0.15, audioCtx.currentTime);
   g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime+0.3);
-  o.connect(g); g.connect(audioCtx.destination);
-  o.start(); o.stop(audioCtx.currentTime+0.3);
+  o.connect(g); g.connect(audioCtx.destination); o.start(); o.stop(audioCtx.currentTime+0.3);
 }
 function bunyiTabrakan(){
   if(!audioCtx || !suaraOn) return;
-  // Noise burst + low thump
   let bufferSize=audioCtx.sampleRate*0.25;
   let buffer=audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
   let data=buffer.getChannelData(0);
@@ -220,16 +210,13 @@ function bunyiTabrakan(){
   let noise=audioCtx.createBufferSource(); noise.buffer=buffer;
   let g=audioCtx.createGain(); g.gain.value=0.35;
   let f=audioCtx.createBiquadFilter(); f.type='lowpass'; f.frequency.value=600;
-  noise.connect(f); f.connect(g); g.connect(audioCtx.destination);
-  noise.start();
-  // Thump
+  noise.connect(f); f.connect(g); g.connect(audioCtx.destination); noise.start();
   let o=audioCtx.createOscillator(); let g2=audioCtx.createGain();
   o.type='sine'; o.frequency.setValueAtTime(120, audioCtx.currentTime);
   o.frequency.exponentialRampToValueAtTime(30, audioCtx.currentTime+0.25);
   g2.gain.setValueAtTime(0.4, audioCtx.currentTime);
   g2.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime+0.3);
-  o.connect(g2); g2.connect(audioCtx.destination);
-  o.start(); o.stop(audioCtx.currentTime+0.3);
+  o.connect(g2); g2.connect(audioCtx.destination); o.start(); o.stop(audioCtx.currentTime+0.3);
 }
 function bunyiGigi(){
   if(!audioCtx || !suaraOn) return;
@@ -238,14 +225,12 @@ function bunyiGigi(){
   o.frequency.setValueAtTime(180, audioCtx.currentTime+0.05);
   g.gain.setValueAtTime(0.12, audioCtx.currentTime);
   g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime+0.12);
-  o.connect(g); g.connect(audioCtx.destination);
-  o.start(); o.stop(audioCtx.currentTime+0.12);
+  o.connect(g); g.connect(audioCtx.destination); o.start(); o.stop(audioCtx.currentTime+0.12);
 }
 function bunyiKlakson(){
   if(!audioCtx || !suaraOn) return;
   let o=audioCtx.createOscillator(), o2=audioCtx.createOscillator(), g=audioCtx.createGain();
-  o.type='sawtooth'; o.frequency.value=370;
-  o2.type='sawtooth'; o2.frequency.value=440;
+  o.type='sawtooth'; o.frequency.value=370; o2.type='sawtooth'; o2.frequency.value=440;
   g.gain.setValueAtTime(0.18, audioCtx.currentTime);
   g.gain.setValueAtTime(0.18, audioCtx.currentTime+0.35);
   g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime+0.4);
@@ -254,7 +239,6 @@ function bunyiKlakson(){
 }
 function bunyiMogok(){
   if(!audioCtx || !suaraOn) return;
-  // Brebet brebet mati
   for(let i=0;i<4;i++){
     let o=audioCtx.createOscillator(), g=audioCtx.createGain();
     o.type='sawtooth'; o.frequency.value=90 - i*15;
@@ -262,8 +246,7 @@ function bunyiMogok(){
     g.gain.setValueAtTime(0.0001, t0);
     g.gain.exponentialRampToValueAtTime(0.2, t0+0.03);
     g.gain.exponentialRampToValueAtTime(0.001, t0+0.15);
-    o.connect(g); g.connect(audioCtx.destination);
-    o.start(t0); o.stop(t0+0.18);
+    o.connect(g); g.connect(audioCtx.destination); o.start(t0); o.stop(t0+0.18);
   }
 }
 function bunyiPerfect(){
@@ -276,8 +259,7 @@ function bunyiPerfect(){
     g.gain.setValueAtTime(0.0001, t0);
     g.gain.exponentialRampToValueAtTime(0.18, t0+0.02);
     g.gain.exponentialRampToValueAtTime(0.001, t0+0.25);
-    o.connect(g); g.connect(audioCtx.destination);
-    o.start(t0); o.stop(t0+0.3);
+    o.connect(g); g.connect(audioCtx.destination); o.start(t0); o.stop(t0+0.3);
   });
 }
 function bunyiBensin(){
@@ -287,8 +269,7 @@ function bunyiBensin(){
   o.frequency.linearRampToValueAtTime(600, audioCtx.currentTime+0.4);
   g.gain.setValueAtTime(0.12, audioCtx.currentTime);
   g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime+0.5);
-  o.connect(g); g.connect(audioCtx.destination);
-  o.start(); o.stop(audioCtx.currentTime+0.5);
+  o.connect(g); g.connect(audioCtx.destination); o.start(); o.stop(audioCtx.currentTime+0.5);
 }
 function bunyiStartMesin(){
   if(!audioCtx || !suaraOn) return;
@@ -297,8 +278,7 @@ function bunyiStartMesin(){
   o.frequency.linearRampToValueAtTime(90, audioCtx.currentTime+0.6);
   g.gain.setValueAtTime(0.15, audioCtx.currentTime);
   g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime+0.7);
-  o.connect(g); g.connect(audioCtx.destination);
-  o.start(); o.stop(audioCtx.currentTime+0.7);
+  o.connect(g); g.connect(audioCtx.destination); o.start(); o.stop(audioCtx.currentTime+0.7);
 }
 function mulaiSirine(){
   if(!audioCtx || sirineOn || !suaraOn) return;
@@ -308,7 +288,6 @@ function mulaiSirine(){
   sirineOsc.type='sine'; sirineGain.gain.value=0.06;
   sirineOsc.connect(sirineGain); sirineGain.connect(audioCtx.destination);
   sirineOsc.start();
-  // Wiu-wiu naik turun
   let naik=true;
   sirineOsc._interval=setInterval(()=>{
     if(!sirineOsc) return;
@@ -328,6 +307,7 @@ function toggleSuara(){
   if(!suaraOn){ if(mesinGain) mesinGain.gain.value=0; stopSirine(); }
   else{ if(audioCtx) audioCtx.resume(); }
 }
+document.getElementById('btnSuara').addEventListener('click', (e)=>{ e.stopPropagation(); initAudio(); toggleSuara(); });
 
 // ===== STATE =====
 let game={jalan:false, over:false, skor:0, koin:0, jarak:0, wanted:0, bensin:100, nyawa:100};
@@ -336,6 +316,7 @@ let jalanOffset=0;
 let musuh=[], koinList=[], bensinList=[], polisi=[];
 let lastTime=0;
 let perfectTimer=0;
+let sudahMulai=false;
 function resetGame(){
   game={jalan:true, over:false, skor:0, koin:0, jarak:0, wanted:0, bensin:100, nyawa:100};
   mobil={x:0.5, y:0.82, vx:0, speed:0, rpm:800, gigi:0, kopling:1, gas:0, rem:false, belok:0, stall:false, stallTimer:0};
@@ -344,33 +325,27 @@ function resetGame(){
   document.getElementById('menuGameOver').classList.add('hilang');
   document.getElementById('stallBox').classList.add('hilang');
   document.getElementById('btnStart').classList.remove('hilang');
+  document.getElementById('controls').classList.add('aktif');
   updateHUD();
 }
 function mulaiGame(){
+  if(sudahMulai && game.jalan) return;
+  sudahMulai=true;
   initAudio();
   if(audioCtx) audioCtx.resume();
   mulaiMesin();
   bunyiStartMesin();
   resetGame();
 }
-function bindHold(id, on, off){
-  let el=document.getElementById(id);
-  let start=(e)=>{ e.preventDefault(); initAudio(); if(audioCtx) audioCtx.resume(); on(); el.classList.add('aktif'); };
-  let end=(e)=>{ e.preventDefault(); off(); el.classList.remove('aktif'); };
-  el.addEventListener('touchstart',start,{passive:false});
-  el.addEventListener('touchend',end,{passive:false});
-  el.addEventListener('touchcancel',end,{passive:false});
-  el.addEventListener('mousedown',start);
-  el.addEventListener('mouseup',end);
-  el.addEventListener('mouseleave',end);
-}
-bindHold('btnGas', ()=>{ mobil.gas=1; }, ()=>{ mobil.gas=0; });
-bindHold('btnRem', ()=>{ mobil.rem=true; }, ()=>{ mobil.rem=false; });
-bindHold('btnKiri', ()=>{ mobil.belok=-1; }, ()=>{ if(mobil.belok===-1) mobil.belok=0; });
-bindHold('btnKanan', ()=>{ mobil.belok=1; }, ()=>{ if(mobil.belok===1) mobil.belok=0; });
-bindHold('btnKopling', ()=>{ koplingTekan(); }, ()=>{ koplingLepas(); });
-bindHold('btnKlakson', ()=>{ bunyiKlakson(); }, ()=>{});
-let koplingTarget=1;
-function koplingTekan(){ koplingTarget=0; }
-function koplingLepas(){
-  if(mobil.gigi===1 &&
+// FIX TOMBOL MULAI - 3 cara sekaligus
+let btnMulai=document.getElementById('btnMulai');
+btnMulai.addEventListener('click', (e)=>{ e.stopPropagation(); mulaiGame(); });
+btnMulai.addEventListener('touchstart', (e)=>{ e.stopPropagation(); mulaiGame(); }, {passive:true});
+document.getElementById('menuAwal').addEventListener('click', (e)=>{
+  if(e.target.id==='btnItch') return;
+  if(e.target.id==='btnMulai') return;
+  // Pencet layar ngendi wae = mulai
+  mulaiGame();
+});
+document.getElementById('btnItch').addEventListener('click', (e)=>{ e.stopPropagation(); window.open('https://astranovagame.itch.io/half-clutch','_blank'); });
+document.getElementById('btnMainLagi').addEventList
